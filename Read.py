@@ -46,13 +46,13 @@ while continue_reading:
         # This is the default key for authentication [0xFF,0xFF,0xFF,0xFF,0xFF,0xFF]
         # Select the scanned tag
         MIFAREReader.MFRC522_SelectTag(uid)
-        # Read the tag and convert to string
-	    (nfcbits) = MIFAREReader.MFRC522_Read(7)
-        translated = []
-        for x in range(2,16):
-         translated.append(chr(nfcbits[x]))
-        nfctag = ''.join(translated)
-        print nfctag
-        lcd = Adafruit_CharLCD()
-        lcd.clear()
-        lcd.message(nfctag)
+    # Read the tag and convert to string
+	(nfcbits) = MIFAREReader.MFRC522_Read(7)
+    translated = []
+    for x in range(2,16):
+        translated.append(chr(nfcbits[x]))
+    nfctag = ''.join(translated)
+    print nfctag
+    lcd = Adafruit_CharLCD()
+    lcd.clear()
+    lcd.message(nfctag)
