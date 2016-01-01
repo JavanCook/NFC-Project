@@ -6,10 +6,7 @@ GPIO.setmode(GPIO.BOARD)
 red = 36
 green = 33
 blue = 35
-
-GPIO.setup(red, GPIO.OUT)
-GPIO.setup(green, GPIO.OUT)
-GPIO.setup(blue, GPIO.OUT)
+GPIO.setup([red, green, blue], GPIO.OUT)
 
 GPIO.output(red, 1)
 sleep(2)
