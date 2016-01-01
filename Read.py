@@ -44,18 +44,27 @@ while continue_reading:
         print "Card read UID: "+str(uid[0])+","+str(uid[1])+","+str(uid[2])+","+str(uid[3])
     
         # This is the default key for authentication
-        key = [0xFF,0xFF,0xFF,0xFF,0xFF,0xFF]
+        #key = [0xFF,0xFF,0xFF,0xFF,0xFF,0xFF]
         
         # Select the scanned tag
         MIFAREReader.MFRC522_SelectTag(uid)
 
         # Authenticate
-        status = MIFAREReader.MFRC522_Auth(MIFAREReader.PICC_AUTHENT1A, 8, key, uid)
+        #status = MIFAREReader.MFRC522_Auth(MIFAREReader.PICC_AUTHENT1B, 7, key, uid)
 
         # Check if authenticated
-        if status == MIFAREReader.MI_OK:
-            MIFAREReader.MFRC522_Read(8)
-            MIFAREReader.MFRC522_StopCrypto1()
-        else:
-            print "Authentication error"
-
+        #if status == MIFAREReader.MI_OK:
+            #MIFAREReader.MFRC522_Read(8)
+            #MIFAREReader.MFRC522_StopCrypto1()
+        #else:
+            #print "Authentication error"
+        #output = []
+        #for y in range (0, 48, 4):
+	(message) = MIFAREReader.MFRC522_Read(7)
+        #print output
+        #print recvData
+        print message
+        translated = []
+        for x in range(2,16):
+         translated.append(chr(message[x]))
+        print ''.join(translated)

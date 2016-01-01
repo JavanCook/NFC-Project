@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 MFRC522-python
 ==============
 
@@ -28,3 +29,15 @@ You can use [this](http://i.imgur.com/y7Fnvhq.png) image for reference.
 
 ##Usage
 Import the class by importing MFRC522 in the top of your script. For more info see the examples.
+=======
+SPI-Py: Hardware SPI as a C Extension for Python
+======
+
+COPYRIGHT (C) 2012 Louis Thiery. All rights reserved. Further work by Connor Wolf.
+
+This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License V2 as published by the Free Software Foundation.
+
+LIABILITY  
+This program is distributed for educational purposes only and is no way suitable for any particular application,
+especially commercial. There is no implied suitability so use at your own risk!
+>>>>>>> 155a23f364e4d5c2fc8c54ff504a2bd1497ba4c7
