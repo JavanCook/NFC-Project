@@ -15,6 +15,7 @@ def end_read(signal,frame):
     print "Ctrl+C captured, ending read."
     continue_reading = False
     GPIO.cleanup()
+    lcd.clear()
 
 # Hook the SIGINT
 signal.signal(signal.SIGINT, end_read)
@@ -28,14 +29,16 @@ print "Press Ctrl-C to stop."
 
 # This loop keeps checking for chips. If one is near it will get the UID and authenticate
 while continue_reading:
+    #Initializes the screen
+    lcd = Adafruit_CharLCD.Adafruit_CharLCD()
+    lcd.clear()
+    lcd.message("Awaiting\nInput")
 
     # Scan for cards
     (status,TagType) = MIFAREReader.MFRC522_Request(MIFAREReader.PICC_REQIDL)
 
     # If a card is found
     if status == MIFAREReader.MI_OK:
-        lcd = Adafruit_CharLCD.Adafruit_CharLCD()
-        lcd.clear()
         lcd.message("Card detected")
         print "Card detected"
         sleep(1)
@@ -55,8 +58,5 @@ while continue_reading:
         nfctag = ''.join(translated)
         joined = "{tag}\nBroers Building".format(tag=nfctag)
         print joined
-        lcd = Adafruit_CharLCD.Adafruit_CharLCD()
-        lcd.clear()
         lcd.message(joined)
         sleep(3)
-        lcd.clear()
