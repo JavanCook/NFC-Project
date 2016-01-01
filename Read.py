@@ -14,8 +14,9 @@ def end_read(signal,frame):
     global continue_reading
     print "Ctrl+C captured, ending read."
     continue_reading = False
-    GPIO.cleanup()
+    lcd = Adafruit_CharLCD.Adafruit_CharLCD()
     lcd.clear()
+    GPIO.cleanup()
 
 # Hook the SIGINT
 signal.signal(signal.SIGINT, end_read)
@@ -39,6 +40,7 @@ while continue_reading:
 
     # If a card is found
     if status == MIFAREReader.MI_OK:
+        lcd.clear()
         lcd.message("Card detected")
         print "Card detected"
         sleep(1)
@@ -58,5 +60,6 @@ while continue_reading:
         nfctag = ''.join(translated)
         joined = "{tag}\nBroers Building".format(tag=nfctag)
         print joined
+        lcd.clear()
         lcd.message(joined)
         sleep(3)
