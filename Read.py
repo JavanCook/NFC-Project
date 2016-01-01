@@ -13,6 +13,7 @@ continue_reading = True
 red = 36
 green = 33
 blue = 35
+GPIO.setmode(GPIO.BOARD)
 GPIO.setup([red, green, blue], GPIO.OUT)
 
 #Setup Buttons
@@ -49,6 +50,7 @@ while continue_reading:
     lcd = Adafruit_CharLCD.Adafruit_CharLCD()
     lcd.clear()
     lcd.message("Awaiting\nInput")
+    GPIO.output([red, green, blue], 0)
     GPIO.output(blue, 1)
 
     #Check In Loop
@@ -84,8 +86,11 @@ while continue_reading:
                 lcd.message(joined)
                 sleep(3)
         else:
-            for time1 in range(1, 6)
-                lcd.message(time1)
+            for time1 in range(1, 6):
+                number1 = (6 - time1)
+                timer1 = "Check In\n{tag}".format(tag=number1)
+                lcd.clear()
+                lcd.message(timer1)
                 sleep(1)
             lcd.clear()
             lcd.message("Check In\nCancelled")
@@ -124,8 +129,8 @@ while continue_reading:
                 lcd.message(joined)
                 sleep(3)
         else:
-            for time1 in range(1, 6)
-                lcd.message(time1)
+            for time2 in range(1, 6):
+                lcd.message(time2)
                 sleep(1)
             lcd.clear()
             lcd.message("Check Out\nCancelled")
