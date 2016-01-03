@@ -105,11 +105,10 @@ while continue_reading:
                     for x in range(1,6):
                         try:
                             s.connect((connectIP, connectport))
-                            s.send(stringed.encode())
+                            s.send('hello')
                             ack = s.recv(packetsize)
                             if len(ack) > 1:
                                 print 'Connected to server.'
-                            break
                         #Handles refused connection error
                         except socket.error as d:
                             if d.errno == 111:
@@ -120,6 +119,7 @@ while continue_reading:
                     if len(attemptlist) == 5:
                         print 'Connection failed, please try again.'
                         break
+                    print web
                     s.send(web)
                     break
             elif number1 == 0:
