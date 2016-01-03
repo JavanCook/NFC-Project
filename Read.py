@@ -91,6 +91,7 @@ while continue_reading:
                     lcd.clear()
                     lcd.message(joined)
                     sleep(3)
+                    break
             elif number1 == 0:
                 lcd.clear()
                 lcd.message("Check In\nCancelled")
@@ -135,6 +136,7 @@ while continue_reading:
                     lcd.clear()
                     lcd.message(joined)
                     sleep(3)
+                    break
             elif number2 == 0:
                 lcd.clear()
                 lcd.message("Check Out\nCancelled")
