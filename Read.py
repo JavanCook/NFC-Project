@@ -56,86 +56,90 @@ while continue_reading:
     #Check In Loop
     if GPIO.input(switch1in) == False:
         print("Button 1 Pressed")
-        sleep(0.3)
         GPIO.output(blue, 0)
         GPIO.output(red, 1)
+        sleep(0.3)
         lcd.message("Check In")
         # Scan for cards
-        (status,TagType) = MIFAREReader.MFRC522_Request(MIFAREReader.PICC_REQIDL)
-        if status == MIFAREReader.MI_OK:
+        for time1 in range(1, 7):
+            number1 = (6 - time1)
+            timer1 = "Check In\n{tag}".format(tag=number1)
             lcd.clear()
-            lcd.message("Card detected")
-            print "Card detected"
+            lcd.message(timer1)
             sleep(1)
-            # Get the UID of the card
-            (status,uid) = MIFAREReader.MFRC522_Anticoll()
-            # If we have the UID, continue
+            (status,TagType) = MIFAREReader.MFRC522_Request(MIFAREReader.PICC_REQIDL)
             if status == MIFAREReader.MI_OK:
-                # This is the default key for authentication [0xFF,0xFF,0xFF,0xFF,0xFF,0xFF]
-                # Select the scanned tag
-                MIFAREReader.MFRC522_SelectTag(uid)
-                # Read the tag and convert to string
-                (nfcbits) = MIFAREReader.MFRC522_Read(7)
-                translated = []
-                for x in range(2,11):
-                    translated.append(chr(nfcbits[x]))
-                nfctag = ''.join(translated)
-                joined = "{tag}\nBroers Building".format(tag=nfctag)
-                print joined
                 lcd.clear()
-                lcd.message(joined)
-                sleep(3)
-        else:
-            for time1 in range(1, 6):
-                number1 = (6 - time1)
-                timer1 = "Check In\n{tag}".format(tag=number1)
-                lcd.clear()
-                lcd.message(timer1)
+                lcd.message("Card detected")
+                print "Card detected"
                 sleep(1)
-            lcd.clear()
-            lcd.message("Check In\nCancelled")
-            sleep(2)
-            lcd.clear()
+                # Get the UID of the card
+                (status,uid) = MIFAREReader.MFRC522_Anticoll()
+                # If we have the UID, continue
+                if status == MIFAREReader.MI_OK:
+                    # This is the default key for authentication [0xFF,0xFF,0xFF,0xFF,0xFF,0xFF]
+                    # Select the scanned tag
+                    MIFAREReader.MFRC522_SelectTag(uid)
+                    # Read the tag and convert to string
+                    (nfcbits) = MIFAREReader.MFRC522_Read(7)
+                    translated = []
+                    for x in range(2,11):
+                        translated.append(chr(nfcbits[x]))
+                    nfctag = ''.join(translated)
+                    joined = "{tag}\nBroers Building".format(tag=nfctag)
+                    print joined
+                    lcd.clear()
+                    lcd.message(joined)
+                    sleep(3)
+            elif number1 == 0:
+                lcd.clear()
+                lcd.message("Check In\nCancelled")
+                sleep(2)
+                lcd.clear()
+
     #Check Out Loop
     elif GPIO.input(switch2in) == False:
         print("Button 2 Pressed")
-        sleep(0.3)
         GPIO.output(blue, 0)
         GPIO.output(green, 1)
+        sleep(0.3)
         lcd.message("Check Out")
         # Scan for cards
-        (status,TagType) = MIFAREReader.MFRC522_Request(MIFAREReader.PICC_REQIDL)
-        if status == MIFAREReader.MI_OK:
+        for time2 in range(1, 7):
+            number2 = (6 - time2)
+            timer2 = "Check Out\n{tag}".format(tag=number2)
             lcd.clear()
-            lcd.message("Card detected")
-            print "Card detected"
+            lcd.message(timer2)
             sleep(1)
-            # Get the UID of the card
-            (status,uid) = MIFAREReader.MFRC522_Anticoll()
-            # If we have the UID, continue
+            (status,TagType) = MIFAREReader.MFRC522_Request(MIFAREReader.PICC_REQIDL)
             if status == MIFAREReader.MI_OK:
-                # This is the default key for authentication [0xFF,0xFF,0xFF,0xFF,0xFF,0xFF]
-                # Select the scanned tag
-                MIFAREReader.MFRC522_SelectTag(uid)
-                # Read the tag and convert to string
-                (nfcbits) = MIFAREReader.MFRC522_Read(7)
-                translated = []
-                for x in range(2,11):
-                    translated.append(chr(nfcbits[x]))
-                nfctag = ''.join(translated)
-                joined = "{tag}\nOutgoing".format(tag=nfctag)
-                print joined
                 lcd.clear()
-                lcd.message(joined)
-                sleep(3)
-        else:
-            for time2 in range(1, 6):
-                lcd.message(time2)
+                lcd.message("Card detected")
+                print "Card detected"
                 sleep(1)
-            lcd.clear()
-            lcd.message("Check Out\nCancelled")
-            sleep(2)
-            lcd.clear()
+                # Get the UID of the card
+                (status,uid) = MIFAREReader.MFRC522_Anticoll()
+                # If we have the UID, continue
+                if status == MIFAREReader.MI_OK:
+                    # This is the default key for authentication [0xFF,0xFF,0xFF,0xFF,0xFF,0xFF]
+                    # Select the scanned tag
+                    MIFAREReader.MFRC522_SelectTag(uid)
+                    # Read the tag and convert to string
+                    (nfcbits) = MIFAREReader.MFRC522_Read(7)
+                    translated = []
+                    for x in range(2,11):
+                        translated.append(chr(nfcbits[x]))
+                    nfctag = ''.join(translated)
+                    joined = "{tag}\nOutgoing".format(tag=nfctag)
+                    print joined
+                    lcd.clear()
+                    lcd.message(joined)
+                    sleep(3)
+            elif number2 == 0:
+                lcd.clear()
+                lcd.message("Check Out\nCancelled")
+                sleep(2)
+                lcd.clear()
 
     #Tag Check
     else:
