@@ -94,8 +94,6 @@ while continue_reading:
                     lcd.message(joined)
                     sleep(3)
                     #Setup TCP communication
-                    bindIP = '192.168.1.66'
-                    bindport = 9234
                     connectIP = 'no-ip.javancook.com'
                     connectport = 9235
                     packetsize = 32
@@ -109,6 +107,8 @@ while continue_reading:
                             ack = s.recv(packetsize)
                             if len(ack) > 1:
                                 print 'Connected to server.'
+                            else:
+                                print 'poo'
                         #Handles refused connection error
                         except socket.error as d:
                             if d.errno == 111:
