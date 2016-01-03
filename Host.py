@@ -5,7 +5,7 @@ from time import gmtime, strftime
 #Allows multiple connects/disconnects
 while True:
  #Setup TCP server
- bindIP = '192.168.1.70'
+ bindIP = '192.168.1.65'
  bindport = 9235
  connectIP = '192.168.1.66'
  connectport = 9234
@@ -17,7 +17,7 @@ while True:
 
  #Receive and acknowledge remote connection
  conn, addr = s.accept()
- print(addr , 'connected', strftime("%a, %d, %b %Y %H:%M:%S", gmtime()))
+ print addr , 'connected', strftime("%a, %d, %b %Y %H:%M:%S", gmtime())
  ackn = conn.recv(packetsize)
  conn.send(ackn)
 
@@ -26,7 +26,7 @@ while True:
   try:
    data = conn.recv(packetsize)
    conn.send(data)
-   print(data)
+   print data
    #Translate into callable list
    #decoded = data.decode()
    #listed = data.split()
@@ -35,5 +35,5 @@ while True:
   #Handles disconnect by peer error
   except socket.error as e:
    if e.errno == 104:
-    print(addr , 'disconnected', strftime("%a, %d, %b %Y %H:%M:%S", gmtime()))
+    print addr , 'disconnected', strftime("%a, %d, %b %Y %H:%M:%S", gmtime())
     break
