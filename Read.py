@@ -5,6 +5,7 @@ import RPi.GPIO as GPIO
 import MFRC522
 import Adafruit_CharLCD
 import signal
+import socket
 from time import sleep
 
 continue_reading = True
@@ -87,10 +88,39 @@ while continue_reading:
                         translated.append(chr(nfcbits[x]))
                     nfctag = ''.join(translated)
                     joined = "{tag}\nBroers Building".format(tag=nfctag)
+                    web = "{tag}\tBroers Building".format(tag=nfctag)
                     print joined
                     lcd.clear()
                     lcd.message(joined)
                     sleep(3)
+                    #Setup TCP communication
+                    bindIP = '192.168.1.66'
+                    bindport = 9234
+                    connectIP = 'no-ip.javancook.com'
+                    connectport = 9235
+                    packetsize = 32
+                    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                    attemptlist = []
+                    #Check connection to server
+                    for x in range(1,6):
+                        try:
+                            s.connect((connectIP, connectport))
+                            s.send(stringed.encode())
+                            ack = s.recv(packetsize)
+                            if len(ack) > 1:
+                                print 'Connected to server.'
+                            break
+                        #Handles refused connection error
+                        except socket.error as d:
+                            if d.errno == 111:
+                                print 'No connection to server, attempt number.', x
+                                #attempt connection five times with two second intervals
+                                time.sleep(2)
+                                attemptlist.append(x)
+                    if len(attemptlist) == 5:
+                        print 'Connection failed, please try again.'
+                        break
+                    s.send(web)
                     break
             elif number1 == 0:
                 lcd.clear()
