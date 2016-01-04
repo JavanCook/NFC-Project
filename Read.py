@@ -88,7 +88,7 @@ while continue_reading:
                         translated.append(chr(nfcbits[x]))
                     nfctag = ''.join(translated)
                     joined = "{tag}\nBroers Building".format(tag=nfctag)
-                    web = "{tag}\tBroers Building".format(tag=nfctag)
+                    web = "|{tag}\t|Broers Building|".format(tag=nfctag)
                     print joined
                     lcd.clear()
                     lcd.message(joined)
@@ -103,12 +103,13 @@ while continue_reading:
                     for x in range(1,6):
                         try:
                             s.connect((connectIP, connectport))
-                            s.send('hello')
+                            s.send('in')
                             ack = s.recv(packetsize)
                             if len(ack) > 1:
                                 print 'Connected to server.'
-                            else:
-                                print 'poo'
+                                lcd.clear()
+                                lcd.message('Connection\nEstablished')
+                                sleep(2)
                         #Handles refused connection error
                         except socket.error as d:
                             if d.errno == 111:
@@ -118,9 +119,15 @@ while continue_reading:
                                 attemptlist.append(x)
                     if len(attemptlist) == 5:
                         print 'Connection failed, please try again.'
+                        lcd.clear()
+                        lcd.message('Connection\nFailed')
+                        sleep(2)
                         break
                     print web
                     s.send(web)
+                    lcd.clear()
+                    lcd.message('Data\nUploaded')
+                    sleep(2)
                     break
             elif number1 == 0:
                 lcd.clear()
@@ -162,10 +169,46 @@ while continue_reading:
                         translated.append(chr(nfcbits[x]))
                     nfctag = ''.join(translated)
                     joined = "{tag}\nOutgoing".format(tag=nfctag)
+                    web = "|{tag}\t|Outgoing|".format(tag=nfctag)
                     print joined
                     lcd.clear()
                     lcd.message(joined)
                     sleep(3)
+                    #Setup TCP communication
+                    connectIP = 'no-ip.javancook.com'
+                    connectport = 9231
+                    packetsize = 32
+                    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                    attemptlist = []
+                    #Check connection to server
+                    for x in range(1,6):
+                        try:
+                            s.connect((connectIP, connectport))
+                            s.send('out')
+                            ack = s.recv(packetsize)
+                            if len(ack) > 1:
+                                print 'Connected to server.'
+                                lcd.clear()
+                                lcd.message('Connection\nEstablished')
+                                sleep(2)
+                        #Handles refused connection error
+                        except socket.error as d:
+                            if d.errno == 111:
+                                print 'No connection to server, attempt number.', x
+                                #attempt connection five times with two second intervals
+                                sleep(2)
+                                attemptlist.append(x)
+                    if len(attemptlist) == 5:
+                        print 'Connection failed, please try again.'
+                        lcd.clear()
+                        lcd.message('Connection\nFailed')
+                        sleep(2)
+                        break
+                    print web
+                    s.send(web)
+                    lcd.clear()
+                    lcd.message('Data\nUploaded')
+                    sleep(2)
                     break
             elif number2 == 0:
                 lcd.clear()

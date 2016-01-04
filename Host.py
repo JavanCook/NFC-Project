@@ -25,23 +25,42 @@ while True:
     #Control input loop
     while True:
         try:
-            data = conn.recv(packetsize)
-            conn.send(data)
-            decoded = data.decode()
-            print(data)
-            fd = open('/home/pi/Website/log.md','a')
-            old_stdout = sys.stdout
-            sys.stdout = fd
-            print(decoded, '\n')
-            sys.stdout=old_stdout
-            print(decoded, '\n')
-            fd.close()
-            os.chdir('/home/pi/Website')
-            os.system('./script.sh')
-            os.chdir('/home/pi/NFC')
-            print(addr , 'disconnected', strftime("%a, %d, %b %Y %H:%M:%S", gmtime()))
-            s.close()
-            break
+            if ackn.decode() = 'in':
+                data = conn.recv(packetsize)
+                conn.send(data)
+                decoded = data.decode()
+                print(data)
+                fd = open('/home/pi/Website/log.md','a')
+                old_stdout = sys.stdout
+                sys.stdout = fd
+                print(decoded, '|Checked In|', strftime("%a, %d, %b %Y %H:%M:%S", gmtime()),'|')
+                sys.stdout=old_stdout
+                print(decoded, '|Checked In|', strftime("%a, %d, %b %Y %H:%M:%S", gmtime()),'|')
+                fd.close()
+                os.chdir('/home/pi/Website')
+                os.system('./script.sh')
+                os.chdir('/home/pi/NFC')
+                print(addr , 'disconnected', strftime("%a, %d, %b %Y %H:%M:%S", gmtime()))
+                s.close()
+                break
+            if ackn.decode() = 'out':
+                data = conn.recv(packetsize)
+                conn.send(data)
+                decoded = data.decode()
+                print(data)
+                fd = open('/home/pi/Website/log.md','a')
+                old_stdout = sys.stdout
+                sys.stdout = fd
+                print(decoded, '|Checked Out|', strftime("%a, %d, %b %Y %H:%M:%S", gmtime()),'|')
+                sys.stdout=old_stdout
+                print(decoded, '|Checked Out|', strftime("%a, %d, %b %Y %H:%M:%S", gmtime()),'|')
+                fd.close()
+                os.chdir('/home/pi/Website')
+                os.system('./script.sh')
+                os.chdir('/home/pi/NFC')
+                print(addr , 'disconnected', strftime("%a, %d, %b %Y %H:%M:%S", gmtime()))
+                s.close()
+                break
 
         #Handles disconnect by peer error
         except socket.error as e:
