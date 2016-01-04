@@ -25,7 +25,7 @@ while True:
     #Control input loop
     while True:
         try:
-            if ackn.decode() = 'in':
+            if ackn.decode() == 'in':
                 data = conn.recv(packetsize)
                 conn.send(data)
                 decoded = data.decode()
@@ -33,9 +33,9 @@ while True:
                 fd = open('/home/pi/Website/log.md','a')
                 old_stdout = sys.stdout
                 sys.stdout = fd
-                print(decoded, '|Checked In|', strftime("%a, %d, %b %Y %H:%M:%S", gmtime()),'|')
+                print(decoded, '\tChecked In\t', strftime("%a, %d, %b %Y %H:%M:%S", gmtime()),'\n')
                 sys.stdout=old_stdout
-                print(decoded, '|Checked In|', strftime("%a, %d, %b %Y %H:%M:%S", gmtime()),'|')
+                print(decoded, '\tChecked In\t', strftime("%a, %d, %b %Y %H:%M:%S", gmtime()),'\n')
                 fd.close()
                 os.chdir('/home/pi/Website')
                 os.system('./script.sh')
@@ -43,7 +43,7 @@ while True:
                 print(addr , 'disconnected', strftime("%a, %d, %b %Y %H:%M:%S", gmtime()))
                 s.close()
                 break
-            if ackn.decode() = 'out':
+            if ackn.decode() == 'out':
                 data = conn.recv(packetsize)
                 conn.send(data)
                 decoded = data.decode()
@@ -51,9 +51,9 @@ while True:
                 fd = open('/home/pi/Website/log.md','a')
                 old_stdout = sys.stdout
                 sys.stdout = fd
-                print(decoded, '|Checked Out|', strftime("%a, %d, %b %Y %H:%M:%S", gmtime()),'|')
+                print(decoded, '\tChecked Out\t', strftime("%a, %d, %b %Y %H:%M:%S", gmtime()),'\n')
                 sys.stdout=old_stdout
-                print(decoded, '|Checked Out|', strftime("%a, %d, %b %Y %H:%M:%S", gmtime()),'|')
+                print(decoded, '\tChecked Out\t', strftime("%a, %d, %b %Y %H:%M:%S", gmtime()),'\n')
                 fd.close()
                 os.chdir('/home/pi/Website')
                 os.system('./script.sh')
