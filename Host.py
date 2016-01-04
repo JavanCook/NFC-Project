@@ -28,14 +28,16 @@ while True:
             data = conn.recv(packetsize)
             conn.send(data)
             print(data)
-            fd = open('log.md','a')
+            fd = open('/home/pi/Website/log.md','a')
             old_stdout = sys.stdout
             sys.stdout = fd
             print(data, '\n')
             sys.stdout=old_stdout
             print(data, '\n')
             fd.close()
-            os.system('./script.sh')
+            #os.chdir('/home/pi/Website')
+            #os.system('sudo ./script.sh')
+            #os.chdir('/home/pi/NFC')
             break
 
         #Handles disconnect by peer error
