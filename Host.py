@@ -1,20 +1,23 @@
 #Import socket, itertools, GPIO and time
 import socket
 from time import gmtime, strftime
+#import git
+import os
+import sys
 
 #Allows multiple connects/disconnects
 while True:
     #Setup TCP server
     bindIP = '192.168.1.65'
-    bindport = 9235
+    bindport = 9231
     packetsize = 70
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     s.bind((bindIP, bindport))
     s.listen(1)
 
     #Receive and acknowledge remote connection
     conn, addr = s.accept()
-    print('connected')
     print(addr , 'connected', strftime("%a, %d, %b %Y %H:%M:%S", gmtime()))
     ackn = conn.recv(packetsize)
     conn.send(ackn)
@@ -25,6 +28,15 @@ while True:
             data = conn.recv(packetsize)
             conn.send(data)
             print(data)
+            fd = open('log.md','a')
+            old_stdout = sys.stdout
+            sys.stdout = fd
+            print(data, '\n')
+            sys.stdout=old_stdout
+            print(data, '\n')
+            fd.close()
+            os.system('./script.sh')
+            break
 
         #Handles disconnect by peer error
         except socket.error as e:
