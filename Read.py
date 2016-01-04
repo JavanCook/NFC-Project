@@ -95,7 +95,7 @@ while continue_reading:
                     sleep(3)
                     #Setup TCP communication
                     connectIP = 'no-ip.javancook.com'
-                    connectport = 9235
+                    connectport = 9231
                     packetsize = 32
                     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                     attemptlist = []
@@ -114,7 +114,7 @@ while continue_reading:
                             if d.errno == 111:
                                 print 'No connection to server, attempt number.', x
                                 #attempt connection five times with two second intervals
-                                time.sleep(2)
+                                sleep(2)
                                 attemptlist.append(x)
                     if len(attemptlist) == 5:
                         print 'Connection failed, please try again.'
