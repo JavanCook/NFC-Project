@@ -27,17 +27,20 @@ while True:
         try:
             data = conn.recv(packetsize)
             conn.send(data)
+            decoded = data.decode()
             print(data)
             fd = open('/home/pi/Website/log.md','a')
             old_stdout = sys.stdout
             sys.stdout = fd
-            print(data, '\n')
+            print(decoded, '\n')
             sys.stdout=old_stdout
-            print(data, '\n')
+            print(decoded, '\n')
             fd.close()
-            #os.chdir('/home/pi/Website')
-            #os.system('sudo ./script.sh')
-            #os.chdir('/home/pi/NFC')
+            os.chdir('/home/pi/Website')
+            os.system('./script.sh')
+            os.chdir('/home/pi/NFC')
+            print(addr , 'disconnected', strftime("%a, %d, %b %Y %H:%M:%S", gmtime()))
+            s.close()
             break
 
         #Handles disconnect by peer error
