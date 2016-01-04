@@ -88,7 +88,7 @@ while continue_reading:
                         translated.append(chr(nfcbits[x]))
                     nfctag = ''.join(translated)
                     joined = "{tag}\nBroers Building".format(tag=nfctag)
-                    web = "|{tag}\t|Broers Building|".format(tag=nfctag)
+                    web = "{tag}\tBroers Building".format(tag=nfctag)
                     print joined
                     lcd.clear()
                     lcd.message(joined)
@@ -169,7 +169,7 @@ while continue_reading:
                         translated.append(chr(nfcbits[x]))
                     nfctag = ''.join(translated)
                     joined = "{tag}\nOutgoing".format(tag=nfctag)
-                    web = "|{tag}\t|Outgoing|".format(tag=nfctag)
+                    web = "{tag}\tOutgoing".format(tag=nfctag)
                     print joined
                     lcd.clear()
                     lcd.message(joined)
