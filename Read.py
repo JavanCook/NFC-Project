@@ -91,15 +91,15 @@ while continue_reading:
                     for x in range(2,11):
                         translated.append(chr(nfcbits[x]))
                     nfctag = ''.join(translated)
-                    joined = "{tag}\nBroers Building".format(tag=nfctag)
-                    web = "{tag}\tBroers Building".format(tag=nfctag)
+                    joined = "{tag}\nLocation".format(tag=nfctag)
+                    web = "{tag}\tLocation".format(tag=nfctag)
                     print joined
                     lcd.clear()
                     lcd.message(joined)
                     sleep(3)
                     #Setup TCP communication
-                    connectIP = 'no-ip.javancook.com'
-                    connectport = 9231
+                    connectIP = 'IP to connect to'
+                    connectport = 22
                     packetsize = 32
                     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                     attemptlist = []
@@ -182,8 +182,8 @@ while continue_reading:
                     lcd.message(joined)
                     sleep(3)
                     #Setup TCP communication
-                    connectIP = 'no-ip.javancook.com'
-                    connectport = 9231
+                    connectIP = 'IP to connect to'
+                    connectport = 22
                     packetsize = 32
                     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                     attemptlist = []

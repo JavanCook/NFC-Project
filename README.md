@@ -46,8 +46,9 @@ If a different SPI module loads try uncommenting the "spi" parts of /boot/config
 2. Wire up the Raspberry Pi as detailed in the table above.
 3. Add your internet settings to /etc/networks/interfaces.
 4. Add "sudo python /file location/Read.py" to /etc/rc.local to run the Python script at startup.
-5. Add script.sh to the folder where you want log.md to be stored and modify Host.py to reflect this.
-6. Configure the IPs and ports correctly for Read.py and Host.py and run Host.py on a separate device.
+5. Add script.sh and log.md to the folder where you want log.md to be stored and modify Host.py to reflect this.
+6. Update script.sh to push to the desired location.
+7. Configure the IPs and ports correctly for Read.py and Host.py and run Host.py on a separate device.
 
 ## Requirements
 This code requires you to have the [SPI-Py module](https://github.com/lthiery/SPI-Py) installed for the MFRC522 NFC tag reader to work.

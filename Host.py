@@ -7,8 +7,8 @@ import sys
 #Allows multiple connects/disconnects
 while True:
     #Setup TCP server
-    bindIP = '192.168.1.65'
-    bindport = 9231
+    bindIP = 'IP of device'
+    bindport = port_to_listen_to
     packetsize = 70
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -30,16 +30,16 @@ while True:
                 conn.send(data)
                 decoded = data.decode()
                 print(data)
-                fd = open('/home/pi/Website/log.md','a')
+                fd = open('/location/log.md','a')
                 old_stdout = sys.stdout
                 sys.stdout = fd
                 print(decoded, '\tChecked In\t', strftime("%a, %d, %b %Y %H:%M:%S", gmtime()),'\n')
                 sys.stdout=old_stdout
                 print(decoded, '\tChecked In\t', strftime("%a, %d, %b %Y %H:%M:%S", gmtime()),'\n')
                 fd.close()
-                os.chdir('/home/pi/Website')
+                os.chdir('location')
                 os.system('./script.sh')
-                os.chdir('/home/pi/NFC')
+                os.chdir('/NFC_Folder')
                 print(addr , 'disconnected', strftime("%a, %d, %b %Y %H:%M:%S", gmtime()))
                 s.close()
                 break
@@ -49,16 +49,16 @@ while True:
                 conn.send(data)
                 decoded = data.decode()
                 print(data)
-                fd = open('/home/pi/Website/log.md','a')
+                fd = open('/location/log.md','a')
                 old_stdout = sys.stdout
                 sys.stdout = fd
                 print(decoded, '\tChecked Out\t', strftime("%a, %d, %b %Y %H:%M:%S", gmtime()),'\n')
                 sys.stdout=old_stdout
                 print(decoded, '\tChecked Out\t', strftime("%a, %d, %b %Y %H:%M:%S", gmtime()),'\n')
                 fd.close()
-                os.chdir('/home/pi/Website')
+                os.chdir('location')
                 os.system('./script.sh')
-                os.chdir('/home/pi/NFC')
+                os.chdir('/NFC_Folder')
                 print(addr , 'disconnected', strftime("%a, %d, %b %Y %H:%M:%S", gmtime()))
                 s.close()
                 break
