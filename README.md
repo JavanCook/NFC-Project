@@ -1,43 +1,53 @@
-<<<<<<< HEAD
-MFRC522-python
+NFC Tag Reader with LCD Screen
 ==============
 
-A small class to interface with the NFC reader Module MFRC522 on the Raspberry Pi.
+A headless NFC tag reader with LCD screen using the [MFRC522-python module](https://github.com/mxgxw/MFRC522-python) and the [Adafruit LCD python module](https://github.com/adafruit/Adafruit-Raspberry-Pi-Python-Code) run by a Raspberry Pi.
+Can also be used to update a log file hosted on a separate Raspberry Pi and upload the file to Github for Github Pages access.
+Features three buttons, one for checking tags in, one for checking tags out and the final button for shutting the Raspberry Pi down, and finally a RGB LED to indicate which state the Reader is in.
 
-This is a Python port of the example code for the NFC module MF522-AN.
+## Pins Used
 
-##Requirements
-This code requires you to have SPI-Py installed from the following repository:
-https://github.com/lthiery/SPI-Py
+|   Name  | Pin # | Pin Name   |
+|---------|-------|------------|
+| Check In Button in |  31   | GPIO06      |
+| Check In Button out |  32   | GPIO12      |
+| Check Out Button in |  37   | GPIO26      |
+| Check Out Button out |  38   | GPIO20      |
+| Off Button in |  40   |   GPIO21    |
+| Off Button out |  29   |   GPIO05    |
+| LED Red |   36  | GPIO16      |
+| LED Green |   33  | GPIO13      |
+| LED Blue |   35  | GPIO19      |
+| LED Ground |   34  | Ground      |
+| MFRC522 SDA  | 24    | GPIO8      |
+| MFRC522 SCK  | 23    | GPIO11     |
+| MFRC522 MOSI | 19    | GPIO10     |
+| MFRC522 MISO | 21    | GPIO9      |
+| MFRC522 IRQ  | None  | None       |
+| MFRC522 GND  | 25   | Ground |
+| MFRC522 RST  | 22    | GPIO25     |
+| MFRC522 3.3V | 17    | 3V3        |
+| LCD GND  | 9  | Ground      |
+| LCD 5V  | 4    | 5V     |
+| LCD Contrast  |  1   |   3V3   |
+| LCD RS | 7    | GPIO04     |
+| LCD RW |  14   | Ground      |
+| LCD E  | 11  | GPIO17       |
+| LCD D4  | 12   | GPIO18 |
+| LCD D5  | 13    | GPIO27     |
+| LCD D6 | 15     | GPIO22        |
+| LCD D7  | 16   | GPIO23 |
+| LCD LED +ve  | 2  | 5V     |
+| LCD LED -ve  | 6    | Ground       |
 
-##Examples
-This repository includes a couple of examples showing how to read, write, and dump data from a chip. They are thoroughly commented, and should be easy to understand.
+## Usage
+1. Setup SPI-Py and enable the spi_bcm2708 module in raspi-config.
+If a different SPI module loads try uncommenting the "spi" parts of /boot/config.txt and rebooting.
+2. Wire up the Raspberry Pi as detailed in the table above.
+3. Add your internet settings to /etc/networks/interfaces.
+4. Add "sudo python /file location/Read.py" to /etc/rc.local to run the Python script at startup.
+5. Add script.sh to the folder where you want log.md to be stored and modify Host.py to reflect this.
+6. Configure the IPs and ports correctly for Read.py and Host.py and run Host.py on a separate device.
 
-## Pins
-You can use [this](http://i.imgur.com/y7Fnvhq.png) image for reference.
-
-| Name | Pin # | Pin name   |
-|------|-------|------------|
-| SDA  | 24    | GPIO8      |
-| SCK  | 23    | GPIO11     |
-| MOSI | 19    | GPIO10     |
-| MISO | 21    | GPIO9      |
-| IRQ  | None  | None       |
-| GND  | Any   | Any Ground |
-| RST  | 22    | GPIO25     |
-| 3.3V | 1     | 3V3        |
-
-##Usage
-Import the class by importing MFRC522 in the top of your script. For more info see the examples.
-=======
-SPI-Py: Hardware SPI as a C Extension for Python
-======
-
-COPYRIGHT (C) 2012 Louis Thiery. All rights reserved. Further work by Connor Wolf.
-
-This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License V2 as published by the Free Software Foundation.
-
-LIABILITY  
-This program is distributed for educational purposes only and is no way suitable for any particular application,
-especially commercial. There is no implied suitability so use at your own risk!
->>>>>>> 155a23f364e4d5c2fc8c54ff504a2bd1497ba4c7
+## Requirements
+This code requires you to have the [SPI-Py module](https://github.com/lthiery/SPI-Py) installed for the MFRC522 NFC tag reader to work.

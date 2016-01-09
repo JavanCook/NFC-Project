@@ -1,3 +1,5 @@
-hello
-b'dt-123-04\tBroers Building' 
-
+---
+title: Log
+layout: default
+---
+<h3>Box Number  Location        Status          Time </h3>

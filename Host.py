@@ -1,7 +1,6 @@
-#Import socket, itertools, GPIO and time
+#Import necessary modules
 import socket
 from time import gmtime, strftime
-#import git
 import os
 import sys
 
@@ -22,9 +21,10 @@ while True:
     ackn = conn.recv(packetsize)
     conn.send(ackn)
 
-    #Control input loop
+    #Input loop
     while True:
         try:
+            #Recieves check in and updates webpage
             if ackn.decode() == 'in':
                 data = conn.recv(packetsize)
                 conn.send(data)
@@ -43,6 +43,7 @@ while True:
                 print(addr , 'disconnected', strftime("%a, %d, %b %Y %H:%M:%S", gmtime()))
                 s.close()
                 break
+            #Recieves check out and updates webpage
             if ackn.decode() == 'out':
                 data = conn.recv(packetsize)
                 conn.send(data)

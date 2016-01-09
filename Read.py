@@ -1,12 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf8 -*-
 
+#Import necessary modules
 import RPi.GPIO as GPIO
 import MFRC522
 import Adafruit_CharLCD
 import signal
 import socket
 from time import sleep
+import os
 
 continue_reading = True
 
@@ -22,9 +24,11 @@ switch1in = 31
 switch2in = 37
 switch1out = 32
 switch2out = 38
-GPIO.setup([switch1out, switch2out], GPIO.OUT)
-GPIO.output([switch1out, switch2out], 1)
-GPIO.setup([switch1in, switch2in], GPIO.IN)
+switch3in = 40
+switch3out = 29
+GPIO.setup([switch1out, switch2out, switch3out], GPIO.OUT)
+GPIO.output([switch1out, switch2out, switch3out], 1)
+GPIO.setup([switch1in, switch2in, switch3in], GPIO.IN)
 
 # Capture SIGINT for cleanup when the script is aborted
 def end_read(signal,frame):
@@ -42,7 +46,7 @@ signal.signal(signal.SIGINT, end_read)
 MIFAREReader = MFRC522.MFRC522()
 
 # Welcome message
-print "Welcome to the MFRC522 data read example"
+print "Welcome to the MFRC522 data read script"
 print "Press Ctrl-C to stop."
 
 # This loop keeps checking for chips. If one is near it will get the UID and authenticate
@@ -117,18 +121,21 @@ while continue_reading:
                                 #attempt connection five times with two second intervals
                                 sleep(2)
                                 attemptlist.append(x)
+                    #Cancels connection if it reaches the limit
                     if len(attemptlist) == 5:
                         print 'Connection failed, please try again.'
                         lcd.clear()
                         lcd.message('Connection\nFailed')
                         sleep(2)
                         break
+                    #Send data to host
                     print web
                     s.send(web)
                     lcd.clear()
                     lcd.message('Data\nUploaded')
                     sleep(2)
                     break
+            #Cancels check in if tag not found
             elif number1 == 0:
                 lcd.clear()
                 lcd.message("Check In\nCancelled")
@@ -198,23 +205,37 @@ while continue_reading:
                                 #attempt connection five times with two second intervals
                                 sleep(2)
                                 attemptlist.append(x)
+                    #Cancels connection if it reaches the limit
                     if len(attemptlist) == 5:
                         print 'Connection failed, please try again.'
                         lcd.clear()
                         lcd.message('Connection\nFailed')
                         sleep(2)
                         break
+                    #Sends data to the host
                     print web
                     s.send(web)
                     lcd.clear()
                     lcd.message('Data\nUploaded')
                     sleep(2)
                     break
+            #Cancels check out if tag not found in time limit
             elif number2 == 0:
                 lcd.clear()
                 lcd.message("Check Out\nCancelled")
                 sleep(2)
                 lcd.clear()
+    #Initiates pi shutdown shutdown
+    elif GPIO.input(switch3in) == False:
+        print("Button 3 Pressed")
+        GPIO.output(blue, 0)
+        sleep(0.3)
+        print("Shutting Down")
+        lcd.clear()
+        lcd.message("Shutting\nDown")
+        sleep(3)
+        lcd.clear()
+        os.system('sudo shutdown -h now')
 
     #Tag Check
     else:
